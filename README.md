@@ -14,11 +14,10 @@
 
 ### Day 2 Schedule (Pacific Time)
 
-- **9:00 - 10:30 AM:** Express Web Application Framework / [**_README_**](./readmes/intro-to-express.md)
-- **10:30 - 11:45 AM:** Express Authentication / [**_README_**](./readmes/express-authentication.md)
-- **11:45 - 12:30 PM:** SocketIO / [**_README_**](./readmes/socket-io.md)
+- **9:00 - 11:00 AM:** Express Web Application Framework / [**_README_**](./readmes/intro-to-express.md)
+- **11:30 - 12:30 PM:** Express Authentication / [**_README_**](./readmes/express-authentication.md)
 - **12:30 - 1:30 PM:** _Lunch_
-- **1:30 - 4:30 PM:** SocketIO (Continued)
+- **1:30 - 4:30 PM:** SocketIO / [**_README_**](./readmes/socket-io.md)
 - **4:30 - 4:45 PM:** [Debrief](./readmes/debrief.md) / [Next Steps](./readmes/next-steps.md)
 - **4:45 - 5:00 PM:** [Course Evaluations](https://www.surveymonkey.com/r/MLZ5WST)
 
