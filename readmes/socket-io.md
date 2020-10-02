@@ -997,7 +997,7 @@ Try clicking on the `Get Question` button on any of the players' tab. The same t
 
 As you might have noticed, using the `https` module requires a significant amount of code to get it working.
 
-`node-fetch` is a Node.js module that allows the server to use the `Fetch` API. Its syntax is much simpler. Let's refactor refactor the `setGame` function in `src/utils/game.js` to use `node-fetch`.
+`node-fetch` is a Node.js module that allows the server to use the `Fetch` API. Its syntax is much simpler. Let's refactor the `setGame` function in `src/utils/game.js` to use `node-fetch`.
 
 Here's the [documentation](https://www.npmjs.com/package/node-fetch) for your reference. Don't forget to install and save the dependency to your `package.json` file!
 
