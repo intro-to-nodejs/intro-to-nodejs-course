@@ -313,7 +313,7 @@ What `package-lock.json` does is **_set your currently installed version of each
    Server is up on port 8080.
    ```
 
-   The Node.js process will stay running until you shut it down. You can always use `ctrl + c` to terminate the process and regain control of the terminal.
+   The Node.js process will stay running until you shut it down. You can always use `CTRL + c` to terminate the process, stop the server, and regain control of the terminal.
 
 1. Try visiting `http://localhost:8080` in the browser.
 <details>
@@ -440,6 +440,22 @@ Enter [Nodemon](https://www.npmjs.com/package/nodemon), a development tool that 
    ```
 
 1. Try making a change in `index.js`. Does your server automatically restart?
+
+1. Right now, we have a problem. Whenever the `recipes.json` file, which serves as the database for the project, is updated, the server restarts unnecessarily, since `nodemon` is watching for any change(s) in the entire repo. If we want `nodemon` to ignore changes made to the `recipes.json` file, then we'd have to start the server using this command:
+
+```bash
+$ nodemon src/index.js --ignore src/models/recipes.json
+```
+
+The `--ignore` flag allows us to specify the file that we want the nodemon command to exclude, which is `src/models/recipes.json` in this case.
+
+1. But it'd be a hassle to have to remember that long command every time we want to start the server. Let's update the `start` script in the `package.json` file to run this command, [like this](https://github.com/intro-to-nodejs/express-recipes/commit/337c13085eae54fe23627262fe240fd2bb97582a):
+
+```json
+"start": "nodemon src/index.js --ignore 'src/models/recipes.json'"
+```
+
+Now, whenever we need to start the server, we can just run `npm run start`, where `start` is the name of the script we want to execute.
 
 ### Step 8: Serving Static Assets
 
