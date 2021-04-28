@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 
-We will learn to:
+By the end of this lesson, you will be able to:
 
 - create real-time, bi-directional, and event-based communication using a Socket.IO-powered Express server
 - make HTTP requests from an Express server using the built-in `http` Node.js module and with [node-fetch](https://www.npmjs.com/package/node-fetch)
@@ -169,7 +169,7 @@ If you ever feel lost as you progress through the tutorial, you can always refer
    `src/index.js`:
 
    ```js
-   const express = require('express');
+   const express = require("express");
    const app = express();
 
    const port = process.env.PORT || 8080;
@@ -302,18 +302,18 @@ Notice in the completed game that the header greets the player by the name that 
    ```js
    // Extract the playerName from the url search params, which the player provided on the registration page
    const urlSearchParams = new URLSearchParams(window.location.search);
-   const playerName = urlSearchParams.get('playerName');
+   const playerName = urlSearchParams.get("playerName");
 
    // We'll follow the basic steps below whenever we need to update the page with Handlebars.
    // Target the template which is embedded as a script tag in the `public/trivia.html` file
-   const mainHeadingTemplate = document.querySelector('#main-heading-template')
+   const mainHeadingTemplate = document.querySelector("#main-heading-template")
      .innerHTML;
 
    // Compile the template into HTML by calling Handlebars.compile(), which returns a function
    const welcomeHeadingHTML = Handlebars.compile(mainHeadingTemplate);
    // Insert the welcomeHeadingHTML right after the opening <main> tag
-   document.querySelector('main').insertAdjacentHTML(
-     'afterBegin',
+   document.querySelector("main").insertAdjacentHTML(
+     "afterBegin",
      // Invoke the welcomeHeadingHTML function, passing in the data that will be used to render the heading
      welcomeHeadingHTML({
        playerName,
@@ -381,7 +381,7 @@ const players = [];
 const addPlayer = ({ id, playerName, room }) => {
   if (!playerName || !room) {
     return {
-      error: new Error('Please enter a player name and room!'),
+      error: new Error("Please enter a player name and room!"),
     };
   }
 
@@ -389,13 +389,13 @@ const addPlayer = ({ id, playerName, room }) => {
   playerName = playerName.trim().toLowerCase();
   room = room.trim().toLowerCase();
 
-  const existingPlayer = players.find(player => {
+  const existingPlayer = players.find((player) => {
     return player.room === room && player.playerName === playerName;
   });
 
   if (existingPlayer) {
     return {
-      error: new Error('Player name is in use!'),
+      error: new Error("Player name is in use!"),
     };
   }
 
@@ -406,12 +406,12 @@ const addPlayer = ({ id, playerName, room }) => {
 };
 
 // Get a player by id
-const getPlayer = id => {
-  const player = players.find(player => player.id === id);
+const getPlayer = (id) => {
+  const player = players.find((player) => player.id === id);
 
   if (!player) {
     return {
-      error: new Error('Player not found!'),
+      error: new Error("Player not found!"),
     };
   }
 
@@ -419,12 +419,12 @@ const getPlayer = id => {
 };
 
 // Get all players in the room
-const getAllPlayers = room => {
-  return players.filter(player => player.room === room);
+const getAllPlayers = (room) => {
+  return players.filter((player) => player.room === room);
 };
 
 // Remove a player by id
-const removePlayer = id => {
+const removePlayer = (id) => {
   return players.find((player, index) => {
     if (player.id === id) {
       return players.splice(index, 1)[0];
@@ -463,14 +463,14 @@ Don't forget to import these helper functions in the main server file so we can 
 `src/index.js`:
 
 ```js
-const formatMessage = require('./utils/formatMessage.js');
+const formatMessage = require("./utils/formatMessage.js");
 
 const {
   addPlayer,
   getAllPlayers,
   getPlayer,
   removePlayer,
-} = require('./utils/players.js');
+} = require("./utils/players.js");
 ```
 
 #### Receiving Events with `socket.on`
@@ -518,12 +518,12 @@ The client should listen for the `message` event and update the chat section acc
 `public/js/trivia.js`:
 
 ```js
-socket.on('message', ({ playerName, text, createdAt }) => {
+socket.on("message", ({ playerName, text, createdAt }) => {
   // target the container in the DOM where we'll attach the new message to
-  const chatMessages = document.querySelector('.chat__messages');
+  const chatMessages = document.querySelector(".chat__messages");
 
   // target the Handlebars template we need to create a message
-  const messageTemplate = document.querySelector('#message-template').innerHTML;
+  const messageTemplate = document.querySelector("#message-template").innerHTML;
 
   // Compile the template into HTML by calling Handlebars.compile(),
   // which returns a function
@@ -532,11 +532,11 @@ socket.on('message', ({ playerName, text, createdAt }) => {
   const html = template({
     playerName,
     text,
-    createdAt: moment(createdAt).format('h:mm a'),
+    createdAt: moment(createdAt).format("h:mm a"),
   });
 
   // Insert the new html right at the beginning of chatMessages container
-  chatMessages.insertAdjacentHTML('afterBegin', html);
+  chatMessages.insertAdjacentHTML("afterBegin", html);
 });
 ```
 
@@ -634,12 +634,12 @@ We have to set up the client to listen for the `room` event and update the page 
 `public/js/trivia.js`:
 
 ```js
-socket.on('room', ({ room, players }) => {
+socket.on("room", ({ room, players }) => {
   // target the container where we'll attach the info to
-  const gameInfo = document.querySelector('.game-info');
+  const gameInfo = document.querySelector(".game-info");
 
   // target the Handlebars template we'll use to format the game info
-  const sidebarTemplate = document.querySelector('#game-info-template')
+  const sidebarTemplate = document.querySelector("#game-info-template")
     .innerHTML;
 
   // Compile the template into HTML by calling Handlebars.compile(), which returns a function
@@ -679,19 +679,19 @@ Listen for the `disconnect` event on the server. This event is automatically fir
 `src/index.js`:
 
 ```js
-socket.on('disconnect', () => {
-  console.log('A player disconnected.');
+socket.on("disconnect", () => {
+  console.log("A player disconnected.");
 
   const disconnectedPlayer = removePlayer(socket.id);
 
   if (disconnectedPlayer) {
     const { playerName, room } = disconnectedPlayer;
     io.in(room).emit(
-      'message',
-      formatMessage('Admin', `${playerName} has left!`)
+      "message",
+      formatMessage("Admin", `${playerName} has left!`)
     );
 
-    io.in(room).emit('room', {
+    io.in(room).emit("room", {
       room,
       players: getAllPlayers(room),
     });
@@ -711,28 +711,28 @@ Let's allow players to communicate with each other in the chat box! In the clien
 
 ```js
 // First, target the chat form in the DOM
-const chatForm = document.querySelector('.chat__form');
+const chatForm = document.querySelector(".chat__form");
 
 // Second, add an event listener on the chat form
 // The first argument is the event to listen for (i.e., 'submit')
 // The second argument is the callback function that is called when the event is triggered
-chatForm.addEventListener('submit', event => {
+chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const chatFormInput = chatForm.querySelector('.chat__message');
-  const chatFormButton = chatForm.querySelector('.chat__submit-btn');
+  const chatFormInput = chatForm.querySelector(".chat__message");
+  const chatFormButton = chatForm.querySelector(".chat__submit-btn");
 
   // Disable the chat form submit button to prevent the player from being able to submit multiple messages simultaneously
-  chatFormButton.setAttribute('disabled', 'disabled');
+  chatFormButton.setAttribute("disabled", "disabled");
 
   // Extract the message that the player typed into the message box
   const message = event.target.elements.message.value;
 
   // Send an event to the server along with the player's chat message
-  socket.emit('sendMessage', message, error => {
+  socket.emit("sendMessage", message, (error) => {
     // On event acknowledgement by the server, reset the chat form button
-    chatFormButton.removeAttribute('disabled');
-    chatFormInput.value = '';
+    chatFormButton.removeAttribute("disabled");
+    chatFormInput.value = "";
     chatFormInput.focus();
 
     // Alert an error if an error is received
@@ -746,14 +746,14 @@ In the server, listen for the `sendMessage` event and emit the message to all pl
 `src/index.js`:
 
 ```js
-socket.on('sendMessage', (message, callback) => {
+socket.on("sendMessage", (message, callback) => {
   const { error, player } = getPlayer(socket.id);
 
   if (error) return callback(error.message);
 
   if (player) {
     io.to(player.room).emit(
-      'message',
+      "message",
       formatMessage(player.playerName, message)
     );
     callback(); // invoke the callback to trigger event acknowledgment
@@ -779,11 +779,11 @@ In the client, send an event called `getQuestion` to the server when any player 
 `public/js/trivia.js`:
 
 ```js
-const triviaQuestionButton = document.querySelector('.trivia__question-btn');
-triviaQuestionButton.addEventListener('click', () => {
+const triviaQuestionButton = document.querySelector(".trivia__question-btn");
+triviaQuestionButton.addEventListener("click", () => {
   // pass null as the second argument because we're not sending any data to the server
   // alert the error if the server sends back an error
-  socket.emit('getQuestion', null, error => {
+  socket.emit("getQuestion", null, (error) => {
     if (error) return alert(error);
   });
 });
@@ -798,21 +798,21 @@ Let's create helper functions that allow us to manage and update our game data o
 `src/utils/game.js`:
 
 ```js
-const https = require('https');
-const { getAllPlayers } = require('./players.js');
+const https = require("https");
+const { getAllPlayers } = require("./players.js");
 
 // An object containing data for the current game
 const game = {
   // prompt keeps track of the current question and answer choices
   // to be displayed to the user
   prompt: {
-    answers: '',
-    question: '',
-    createdAt: '',
+    answers: "",
+    question: "",
+    createdAt: "",
   },
   status: {
     submissions: {}, // submissions keeps track of players' answer submissions
-    correctAnswer: '', // the correct answer to the current question
+    correctAnswer: "", // the correct answer to the current question
     isRoundOver: false, // determines whether or not the answer can be revealed
   },
 };
@@ -821,14 +821,14 @@ const game = {
 const getGameStatus = ({ event }) => {
   const { correctAnswer, isRoundOver } = game.status;
 
-  if (event === 'getAnswer' && isRoundOver) {
+  if (event === "getAnswer" && isRoundOver) {
     return { correctAnswer };
   }
 };
 
 // Update the game status
 const setGameStatus = ({ event, playerId, answer, room }) => {
-  if (event === 'sendAnswer') {
+  if (event === "sendAnswer") {
     const { submissions } = game.status;
 
     // Store only one response per player per round
@@ -846,22 +846,22 @@ const setGameStatus = ({ event, playerId, answer, room }) => {
 };
 
 // Calls the opentdb API to get a random programming trivia question
-const setGame = callback => {
+const setGame = (callback) => {
   // configure the url query params to get one question (i.e., amount=1)
   // in the programming category (i.e., category=18)
-  const url = 'https://opentdb.com/api.php?amount=1&category=18';
-  let data = '';
+  const url = "https://opentdb.com/api.php?amount=1&category=18";
+  let data = "";
 
   // Here, we use the built-in `https` module to make https requests.
   // We need to pass a callback that handles data received in chunks and ends the request.
-  const request = https.request(url, response => {
+  const request = https.request(url, (response) => {
     // Listen to the readable stream 'data' event and and process incoming chunks of data
-    response.on('data', chunk => {
+    response.on("data", (chunk) => {
       data = data + chunk.toString();
     });
 
     // When the data stream ends, the stream 'end' event is called once
-    response.on('end', () => {
+    response.on("end", () => {
       const {
         correct_answer,
         createdAt,
@@ -882,14 +882,14 @@ const setGame = callback => {
   });
 
   // Handle error by logging any error to the server console
-  request.on('error', error => {
-    console.error('An error', error);
+  request.on("error", (error) => {
+    console.error("An error", error);
   });
   request.end();
 };
 
 // Shuffles an array. Source: https://javascript.info/task/shuffle
-const shuffle = array => {
+const shuffle = (array) => {
   for (let end = array.length - 1; end > 0; end--) {
     let random = Math.floor(Math.random() * (end + 1));
     [array[end], array[random]] = [array[random], array[end]];
@@ -911,16 +911,16 @@ The server will have to listen for the `getQuestion` event from the client and i
 `src/index.js`:
 
 ```js
-socket.on('getQuestion', (data, callback) => {
+socket.on("getQuestion", (data, callback) => {
   const { error, player } = getPlayer(socket.id);
 
   if (error) return callback(error.message);
 
   if (player) {
     // Pass in a callback function to handle the promise that's returned from the API call
-    setGame(game => {
+    setGame((game) => {
       // Emit the "question" event to all players in the room
-      io.to(player.room).emit('question', {
+      io.to(player.room).emit("question", {
         playerName: player.playerName,
         ...game.prompt,
       });
@@ -946,44 +946,44 @@ In the client, listen for the `question` event and update the page accordingly w
 // We'll use this helper function to decode any HTML-encoded
 // strings in the trivia questions
 // e.g., "According to DeMorgan&#039;s Theorem, the Boolean expression (AB)&#039; is equivalent to:"
-const decodeHTMLEntities = text => {
-  const textArea = document.createElement('textarea');
+const decodeHTMLEntities = (text) => {
+  const textArea = document.createElement("textarea");
   textArea.innerHTML = text;
   return textArea.value;
 };
 
-socket.on('question', ({ answers, createdAt, playerName, question }) => {
-  const triviaForm = document.querySelector('.trivia__form');
-  const triviaQuestion = document.querySelector('.trivia__question');
-  const triviaAnswers = document.querySelector('.trivia__answers');
-  const triviaQuestionButton = document.querySelector('.trivia__question-btn');
+socket.on("question", ({ answers, createdAt, playerName, question }) => {
+  const triviaForm = document.querySelector(".trivia__form");
+  const triviaQuestion = document.querySelector(".trivia__question");
+  const triviaAnswers = document.querySelector(".trivia__answers");
+  const triviaQuestionButton = document.querySelector(".trivia__question-btn");
   const triviaFormSubmitButton = triviaForm.querySelector(
-    '.trivia__submit-btn'
+    ".trivia__submit-btn"
   );
 
-  const questionTemplate = document.querySelector('#trivia-question-template')
+  const questionTemplate = document.querySelector("#trivia-question-template")
     .innerHTML;
 
   // Clear out any question and answers from the previous round
-  triviaQuestion.innerHTML = '';
-  triviaAnswers.innerHTML = '';
+  triviaQuestion.innerHTML = "";
+  triviaAnswers.innerHTML = "";
 
   // Disable the Get Question button to prevent the player from trying to skip a question
-  triviaQuestionButton.setAttribute('disabled', 'disabled');
+  triviaQuestionButton.setAttribute("disabled", "disabled");
 
   // Enable the submit button to allow the player to submit an answer
-  triviaFormSubmitButton.removeAttribute('disabled');
+  triviaFormSubmitButton.removeAttribute("disabled");
 
   const template = Handlebars.compile(questionTemplate);
 
   const html = template({
     playerName,
-    createdAt: moment(createdAt).format('h:mm a'),
+    createdAt: moment(createdAt).format("h:mm a"),
     question: decodeHTMLEntities(question),
     answers,
   });
 
-  triviaQuestion.insertAdjacentHTML('beforeend', html);
+  triviaQuestion.insertAdjacentHTML("beforeend", html);
 });
 ```
 
@@ -1030,20 +1030,20 @@ Don't forget to disable the button after the player has submitted an answer, sin
 `public/js/trivia.js`:
 
 ```js
-const triviaForm = document.querySelector('.trivia__form');
-triviaForm.addEventListener('submit', event => {
+const triviaForm = document.querySelector(".trivia__form");
+triviaForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const triviaFormSubmitButton = triviaForm.querySelector(
-    '.trivia__submit-btn'
+    ".trivia__submit-btn"
   );
-  const triviaFormInputAnswer = triviaForm.querySelector('.trivia__answer');
+  const triviaFormInputAnswer = triviaForm.querySelector(".trivia__answer");
 
-  triviaFormSubmitButton.setAttribute('disabled', 'disabled');
+  triviaFormSubmitButton.setAttribute("disabled", "disabled");
 
   const answer = event.target.elements.answer.value;
-  socket.emit('sendAnswer', answer, error => {
-    triviaFormInputAnswer.value = '';
+  socket.emit("sendAnswer", answer, (error) => {
+    triviaFormInputAnswer.value = "";
     triviaFormInputAnswer.focus();
 
     if (error) return alert(error.message);
@@ -1059,16 +1059,16 @@ In the server, listen for and handle the `sendAnswer` event:
 
 ```js
 // import setGameStatus function
-const { setGame, setGameStatus } = require('./utils/game.js');
+const { setGame, setGameStatus } = require("./utils/game.js");
 
-socket.on('sendAnswer', (answer, callback) => {
+socket.on("sendAnswer", (answer, callback) => {
   const { error, player } = getPlayer(socket.id);
 
   if (error) return callback(error.message);
 
   if (player) {
     const { isRoundOver } = setGameStatus({
-      event: 'sendAnswer',
+      event: "sendAnswer",
       playerId: player.id,
       room: player.room,
     });
@@ -1076,7 +1076,7 @@ socket.on('sendAnswer', (answer, callback) => {
     // Since we want to show the player's submission to the rest of the players,
     // we have to emit an event (`answer`) to all the players in the room along
     // with the player's answer and `isRoundOver`.
-    io.to(player.room).emit('answer', {
+    io.to(player.room).emit("answer", {
       ...formatMessage(player.playerName, answer),
       isRoundOver,
     });
@@ -1091,10 +1091,10 @@ In the client, listen for the `answer` event and update the Trivia section with 
 `public/js/trivia.js`:
 
 ```js
-socket.on('answer', ({ playerName, isRoundOver, createdAt, text }) => {
-  const triviaAnswers = document.querySelector('.trivia__answers');
+socket.on("answer", ({ playerName, isRoundOver, createdAt, text }) => {
+  const triviaAnswers = document.querySelector(".trivia__answers");
   const triviaRevealAnswerButton = document.querySelector(
-    '.trivia__answer-btn'
+    ".trivia__answer-btn"
   );
 
   const template = Handlebars.compile(messageTemplate);
@@ -1102,14 +1102,14 @@ socket.on('answer', ({ playerName, isRoundOver, createdAt, text }) => {
   const html = template({
     playerName: playerName,
     text,
-    createdAt: moment(createdAt).format('h:mm a'),
+    createdAt: moment(createdAt).format("h:mm a"),
   });
 
-  triviaAnswers.insertAdjacentHTML('afterBegin', html);
+  triviaAnswers.insertAdjacentHTML("afterBegin", html);
 
   // If isRoundOver is set to true, activate the reveal answer button
   if (isRoundOver) {
-    triviaRevealAnswerButton.removeAttribute('disabled');
+    triviaRevealAnswerButton.removeAttribute("disabled");
   }
 });
 ```
@@ -1130,9 +1130,9 @@ In the client, emit a `getAnswer` event to the server:
 `public/js/trivia.js`:
 
 ```js
-const triviaRevealAnswerButton = document.querySelector('.trivia__answer-btn');
-triviaRevealAnswerButton.addEventListener('click', () => {
-  socket.emit('getAnswer', null, error => {
+const triviaRevealAnswerButton = document.querySelector(".trivia__answer-btn");
+triviaRevealAnswerButton.addEventListener("click", () => {
+  socket.emit("getAnswer", null, (error) => {
     if (error) return alert(error);
   });
 });
@@ -1143,17 +1143,17 @@ In the server, emit `correctAnswer` to all players along with the correct answer
 `src/index.js`:
 
 ```js
-socket.on('getAnswer', (data, callback) => {
+socket.on("getAnswer", (data, callback) => {
   const { error, player } = getPlayer(socket.id);
 
   if (error) return callback(error.message);
 
   if (player) {
     const { correctAnswer } = getGameStatus({
-      event: 'getAnswer',
+      event: "getAnswer",
     });
     io.to(player.room).emit(
-      'correctAnswer',
+      "correctAnswer",
       formatMessage(player.playerName, correctAnswer)
     );
   }
@@ -1165,17 +1165,17 @@ Back in the client, listen for the `correctAnswer` event and display the correct
 `public/js/trivia.js`:
 
 ```js
-socket.on('correctAnswer', ({ text }) => {
-  const triviaAnswers = document.querySelector('.trivia__answers');
-  const triviaQuestionButton = document.querySelector('.trivia__question-btn');
+socket.on("correctAnswer", ({ text }) => {
+  const triviaAnswers = document.querySelector(".trivia__answers");
+  const triviaQuestionButton = document.querySelector(".trivia__question-btn");
   const triviaRevealAnswerButton = document.querySelector(
-    '.trivia__answer-btn'
+    ".trivia__answer-btn"
   );
   const triviaFormSubmitButton = triviaForm.querySelector(
-    '.trivia__submit-btn'
+    ".trivia__submit-btn"
   );
 
-  const answerTemplate = document.querySelector('#trivia-answer-template')
+  const answerTemplate = document.querySelector("#trivia-answer-template")
     .innerHTML;
   const template = Handlebars.compile(answerTemplate);
 
@@ -1183,11 +1183,11 @@ socket.on('correctAnswer', ({ text }) => {
     text,
   });
 
-  triviaAnswers.insertAdjacentHTML('afterBegin', html);
+  triviaAnswers.insertAdjacentHTML("afterBegin", html);
 
-  triviaQuestionButton.removeAttribute('disabled');
-  triviaRevealAnswerButton.setAttribute('disabled', 'disabled');
-  triviaFormSubmitButton.removeAttribute('disabled');
+  triviaQuestionButton.removeAttribute("disabled");
+  triviaRevealAnswerButton.setAttribute("disabled", "disabled");
+  triviaFormSubmitButton.removeAttribute("disabled");
 });
 ```
 

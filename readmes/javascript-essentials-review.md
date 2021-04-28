@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 
-We will review:
+By the end of this lesson, you will be able to understand:
 
 - the arrow function syntax
 - the differences between `var`, `let`, and `const`
@@ -78,8 +78,8 @@ In JavaScript, we can declare variables with either `var`, `let`, or `const`.
 
 ```js
 // What will be logged to the console? Why?
-var color = 'red';
-var color = 'yellow';
+var color = "red";
+var color = "yellow";
 console.log(color); // "yellow"
 ```
 
@@ -87,12 +87,12 @@ console.log(color); // "yellow"
 
 ```js
 // What will be logged to the console? Why?
-let color = 'red';
-let color = 'yellow';
+let color = "red";
+let color = "yellow";
 console.log(color); // SyntaxError: Identifier 'color' has already been declared
 
-let greeting = 'hello';
-greeting = 'hi';
+let greeting = "hello";
+greeting = "hi";
 console.log(greeting); // 'hi'
 ```
 
@@ -100,8 +100,8 @@ console.log(greeting); // 'hi'
 
 ```js
 // What will be logged to the console? Why?
-const color = 'red';
-color = 'yellow';
+const color = "red";
+color = "yellow";
 console.log(color); // TypeError: Assignment to constant variable.
 ```
 
@@ -110,18 +110,18 @@ Once you've assigned an object to `const`, you cannot re-assign the `const` vari
 ```js
 // What will be logged to the console? Why?
 const computer = {
-  type: 'Macintosh',
-  os: 'Catalina',
+  type: "Macintosh",
+  os: "Catalina",
 };
 
-computer.type = 'Microsoft';
-computer.os = 'Windows 10';
+computer.type = "Microsoft";
+computer.os = "Windows 10";
 
 console.log(computer); // { type: 'Microsoft', os: 'Windos 10' }
 
 computer = {
-  type: 'Chromebook',
-  os: 'Chrome OS',
+  type: "Chromebook",
+  os: "Chrome OS",
 };
 
 console.log(computer); // TypeError: Assignment to constant variable.
@@ -135,17 +135,17 @@ Scope describes the part of the program where variables are accessible by the pr
 
 ```js
 // What will be logged to the console? Why?
-var fruit = 'apple';
+var fruit = "apple";
 var fruitEaten = 3;
 
 if (fruitEaten > 2) {
-  var fruit = 'orange';
+  var fruit = "orange";
 }
 
 console.log(fruit); // "orange"
 
 const printColor = () => {
-  var color = 'red';
+  var color = "red";
 };
 console.log(color); // ReferenceError: color is not defined
 ```
@@ -156,14 +156,14 @@ console.log(color); // ReferenceError: color is not defined
 // What will be logged to the console? Why?
 shouldEatFruit = true;
 if (shouldEatFruit) {
-  let fruit = 'orange';
-  const anotherFruit = 'apple';
-  console.log('fruit inside block: ', fruit); // fruit inside block: orange
-  console.log('anotherFruit inside block: ', anotherFruit); // anotherFruit inside block: apple
+  let fruit = "orange";
+  const anotherFruit = "apple";
+  console.log("fruit inside block: ", fruit); // fruit inside block: orange
+  console.log("anotherFruit inside block: ", anotherFruit); // anotherFruit inside block: apple
 }
 
-console.log('fruit outside block: ', fruit); // ReferenceError: fruit is not defined
-console.log('anotherFruit outside block:', anotherFruit); // ReferenceError: anotherFruit is not defined
+console.log("fruit outside block: ", fruit); // ReferenceError: fruit is not defined
+console.log("anotherFruit outside block:", anotherFruit); // ReferenceError: anotherFruit is not defined
 ```
 
 Take a look at the following code:
@@ -174,9 +174,9 @@ let number = 1;
 
 if (number === 1) {
   let number = 2;
-  console.log('inside block: ', number);
+  console.log("inside block: ", number);
 }
-console.log('outside block: ', number);
+console.log("outside block: ", number);
 ```
 
 ### Variable Hoisting
@@ -188,17 +188,17 @@ During hoisting, `var` variables are initialized to `undefined`, so trying to ac
 ```js
 // What will be logged to the console? Why?
 console.log(animal);
-var animal = 'rabbit';
+var animal = "rabbit";
 ```
 
 How about this?
 
 ```js
 // What will be logged to the console? Why?
-var flower = 'rose';
+var flower = "rose";
 const printFlower = () => {
   console.log(flower);
-  var flower = 'hibiscus';
+  var flower = "hibiscus";
 };
 printFlower();
 ```
@@ -208,7 +208,7 @@ Trying to do the same with `let` or `const` returns a `ReferenceError`, as they 
 ```js
 // What will be logged to the console? Why?
 console.log(flower);
-let flower = 'rose'; // ReferenceError: Cannot access 'flower' before initialization
+let flower = "rose"; // ReferenceError: Cannot access 'flower' before initialization
 ```
 
 In short, you shouldn’t ever have to use `var` again.
@@ -219,9 +219,9 @@ The destructuring syntax allows us to easily extract data from arrays or objects
 
 ```js
 const person = {
-  name: 'Hou Chia',
-  title: 'software engineer',
-  city: 'Brooklyn,NY',
+  name: "Hou Chia",
+  title: "software engineer",
+  city: "Brooklyn,NY",
   age: 32,
 };
 
@@ -261,7 +261,7 @@ possible key/values and destructure the object:
 const introduce = (name, title, city, age) => {
   return `Hello, my name is ${name}, and I'm a ${title}. I live in ${city}, and I'm ${age} years old.`;
 };
-introduce('Hou', 'software engineer', 'Brooklyn, NY', 32); // the order in which the arguments are passed matters here
+introduce("Hou", "software engineer", "Brooklyn, NY", 32); // the order in which the arguments are passed matters here
 
 /*
   With Destructuring
@@ -280,12 +280,12 @@ You can also [destructure arrays](https://developer.mozilla.org/en-US/docs/Web/J
 We can clone the properties from one object to another:
 
 ```js
-const person = { name: 'Hou', title: 'software engineer' };
-const personalInfo = { age: 32, location: 'Brooklyn, NY' };
+const person = { name: "Hou", title: "software engineer" };
+const personalInfo = { age: 32, location: "Brooklyn, NY" };
 
 const employee = {
   id: 1,
-  department: 'engineering',
+  department: "engineering",
   ...person,
   ...personalInfo,
 };
@@ -311,21 +311,21 @@ ECMAScript Modules are defined with the use of the `import` and `export` keyword
 
 ```js
 // file1.js
-const sayHi = name => {
+const sayHi = (name) => {
   console.log(`Hello, ${name}!`);
 };
 export { sayHi };
 
 //file2.js
-import { sayHi } from './file1.js';
-console.log(sayHi('Hou'));
+import { sayHi } from "./file1.js";
+console.log(sayHi("Hou"));
 ```
 
 CommonJS uses the `module.exports` syntax for exports and the `require()` function for imports:
 
 ```js
 // file1.js
-const sayHi = name => {
+const sayHi = (name) => {
   console.log(`Hello, ${name}!`);
 };
 
@@ -335,8 +335,8 @@ module.exports = {
 
 //file2.js
 
-const { sayHi } = require('./file1.js');
-console.log(sayHi('Hou'));
+const { sayHi } = require("./file1.js");
+console.log(sayHi("Hou"));
 ```
 
 A detailed look at the differences between the two module systems is outside the scope of this course, but here's an excellent [article](https://blog.logrocket.com/es-modules-in-node-today/) about it.
@@ -351,14 +351,14 @@ A function that is nested inside of another function has access to variables dec
 
 ```js
 // What do you think will be logged to the console? Why?
-const lastName = 'Chia';
+const lastName = "Chia";
 
 const printPerson = () => {
-  const firstName = 'Hou'; // name is a local variable created by printPerson
+  const firstName = "Hou"; // name is a local variable created by printPerson
 
   // logNameAndLocation() is the closure, a function nested inside of printPerson()
   const logNameAndLocation = () => {
-    const location = 'Brooklyn, NY';
+    const location = "Brooklyn, NY";
     // access a variable declared in the local, outer function, and global scopes
     console.log(`${firstName} ${lastName}, ${location}`);
   };
@@ -410,16 +410,16 @@ In the not-so-distant past, we relied primarily on promise chains to handle asyn
 Functions declared with `async` always return a promise. For example:
 
 ```js
-const greet = async () => 'hello'; // async implicitly wraps 'hello'in a promise
+const greet = async () => "hello"; // async implicitly wraps 'hello'in a promise
 console.log(greet); // returns a Promise object
 
-greet.then(greeting => console.log(greeting)); // logs 'hello'
+greet.then((greeting) => console.log(greeting)); // logs 'hello'
 ```
 
 ...is equivalent to:
 
 ```js
-const greet = async () => Promise.resolve('hello');
+const greet = async () => Promise.resolve("hello");
 console.log(greet()); // returns a Promise object
 ```
 
@@ -428,10 +428,10 @@ console.log(greet()); // returns a Promise object
 Take a look at the following code:
 
 ```js
-const smileAfterDelay = delay => {
-  return new Promise(resolve => {
+const smileAfterDelay = (delay) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve('😁');
+      resolve("😁");
     }, delay);
   });
 };
@@ -453,9 +453,9 @@ Here is a function that performs a GET request using `fetch` to a public api, ex
 
 ```js
 const fetchTrivia = () => {
-  fetch('https://opentdb.com/api.php?amount=1&category=18')
-    .then(response => response.json()) // parse the JSON response, returning a promise that resolves to a JS object
-    .then(data => {
+  fetch("https://opentdb.com/api.php?amount=1&category=18")
+    .then((response) => response.json()) // parse the JSON response, returning a promise that resolves to a JS object
+    .then((data) => {
       console.log(data.results[0]);
     })
     .catch(console.error);
@@ -470,7 +470,7 @@ ES6 offers a better alternative. Here's the same function written with `async`/`
 const fetchTrivia = async () => {
   try {
     const response = await fetch(
-      'https://opentdb.com/api.php?amount=1&category=18'
+      "https://opentdb.com/api.php?amount=1&category=18"
     );
     const data = await response.json();
     console.log(data.results[0]);

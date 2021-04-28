@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 
-We will learn to use the:
+By the end of this lesson, you will be able to:
 
 - `fs` module to access and interact with the file system
 - `process` module to interact with the current Node.js process
@@ -97,7 +97,7 @@ To load in the `fs` module and get access to its properties and methods, `requir
 `nodejs-api/file-system.js`:
 
 ```js
-const fs = require('fs').promises;
+const fs = require("fs").promises;
 ```
 
 ### Inspect File Details - `fs.stat()`
@@ -109,7 +109,7 @@ Add the following code right below the `fs` module `require()` function:
 `nodejs-api/file-system.js`:
 
 ```js
-const getStats = async path => {
+const getStats = async (path) => {
   try {
     // Pass in the file path
     const stats = await fs.stat(path);
@@ -119,7 +119,7 @@ const getStats = async path => {
   }
 };
 
-getStats('./test.txt');
+getStats("./test.txt");
 ```
 
 Run your script in the terminal (assuming you're in the `nodejs-api` directory): `$ node script.js`
@@ -155,16 +155,16 @@ Add the following code:
 `nodejs-api/file-system.js`:
 
 ```js
-const readFile = async path => {
+const readFile = async (path) => {
   try {
-    const contents = await fs.readFile(path, 'utf8');
+    const contents = await fs.readFile(path, "utf8");
     console.log(contents);
   } catch (error) {
     console.error(error);
   }
 };
 
-readFile('./test.txt');
+readFile("./test.txt");
 ```
 
 Run your script in the terminal (assuming you're in the `nodejs-api` directory): `$ node script.js`
@@ -195,7 +195,7 @@ const writeFile = async (path, data) => {
     console.error(error);
   }
 };
-writeFile('./test.txt', 'hello world');
+writeFile("./test.txt", "hello world");
 ```
 
 </details>
@@ -295,7 +295,7 @@ Log the `process.env` property to the console:
 `nodejs-api/process.js`:
 
 ```js
-console.log('process.env:', process.env);
+console.log("process.env:", process.env);
 ```
 
 What do you see? It logs an object containing all the environment variables for the Node.js process.
@@ -305,7 +305,7 @@ Log `process.env.NODE_ENV` to the console:
 `nodejs-api/process.js`:
 
 ```js
-console.log('process.env.NODE_ENV: ', process.env.NODE_ENV);
+console.log("process.env.NODE_ENV: ", process.env.NODE_ENV);
 ```
 
 You should get `process.env.NODE_ENV: undefined`.

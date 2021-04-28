@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 
-We will learn to:
+By the end of this lesson, you will be able to:
 
 - Install and use Express to handle HTTP requests
 - Build a RESTful API with Express
@@ -289,7 +289,7 @@ What `package-lock.json` does is **_set your currently installed version of each
 
    ```js
    // First, use the CommonJS require() function to import the Express module into the program
-   const express = require('express');
+   const express = require("express");
 
    // Next, invoke express() to instantiate a new Express application
    const app = express();
@@ -335,8 +335,8 @@ Our application is still missing routes! Routing refers to how an application ha
 
    ```js
    //  Route handler that sends a message to someone visiting http://localhost:8080/
-   app.get('/', (req, res) => {
-     res.send('Hello Express Student!');
+   app.get("/", (req, res) => {
+     res.send("Hello Express Student!");
    });
    ```
 
@@ -366,15 +366,15 @@ Take a look [here](http://expressjs.com/en/starter/basic-routing.html).
 **_DISCUSS:_** Compare and contrast the Express implementation above with the vanilla Node.js implementation below:
 
 ```js
-const http = require('http');
-const hostname = '127.0.0.1';
+const http = require("http");
+const hostname = "127.0.0.1";
 
 // http.createServer() creates a new HTTP server and returns it.
 const server = http.createServer((req, res) => {
   // Whenever a new request is received, the request event is called, providing two objects: a request (req) and a response (res).
   res.statusCode = 200; // Set the statusCode property to 200 to indicate a successful response.
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello Express Student!'); // close the response, adding the content as an argument to end():
+  res.setHeader("Content-Type", "text/plain");
+  res.end("Hello Express Student!"); // close the response, adding the content as an argument to end():
 });
 
 const port = process.env.PORT || 8080;
@@ -397,7 +397,7 @@ Route parameters are simply placeholders (similar to variables) in a URL. They a
    `index.js`:
 
    ```js
-   app.get('/:name', (req, res) => {
+   app.get("/:name", (req, res) => {
      res.send(`Welcome to Express Recipes, ${req.params.name}!`);
    });
    ```
@@ -702,7 +702,7 @@ While it is possible to transfer data using other formats (e.g., `XML`) and ther
 
     ```js
     // src/routers/recipe.js
-    const express = require('express');
+    const express = require("express");
     // Create a Router instance, which is like a mini Express app that runs its own complete middleware and routing system
     const router = express.Router();
 
@@ -741,8 +741,8 @@ While it is possible to transfer data using other formats (e.g., `XML`) and ther
 
    ```js
    // Import file system methods that return Promise objects so that we can use the async/await pattern
-   const fs = require('fs').promises;
-   const path = require('path');
+   const fs = require("fs").promises;
+   const path = require("path");
    ```
 
 1. Then, implement the route handler:
@@ -751,10 +751,10 @@ While it is possible to transfer data using other formats (e.g., `XML`) and ther
 
    ```js
    // Contruct the path to the recipes data
-   const recipesFilePath = path.join(__dirname, '../recipes.json');
+   const recipesFilePath = path.join(__dirname, "../recipes.json");
 
    // Notice that the route handler is passed a `next` argument, which can be used to handle errors caught in the try/catch block. We will handle these errors at the end of the tutorial
-   router.get('/', async (req, res, next) => {
+   router.get("/", async (req, res, next) => {
      try {
        const data = await fs.readFile(recipesFilePath);
        res.json(JSON.parse(data));
@@ -795,7 +795,7 @@ Let's take a look at two widely-used built-in middlewares:
    `src/routers/recipe.js`:
 
    ```js
-   router.post('/', async (req, res, next) => {
+   router.post("/", async (req, res, next) => {
      try {
        // Get all recipes from our database
        const data = await fs.readFile(recipesFilePath);
@@ -922,8 +922,8 @@ Add the following redirect above the recipe router:
 `src/index.js`:
 
 ```js
-app.get('/', (req, res) => {
-  res.redirect('/api/v1/recipes');
+app.get("/", (req, res) => {
+  res.redirect("/api/v1/recipes");
 });
 ```
 
@@ -956,7 +956,7 @@ $ npm install cors --save
 `src/index.js`:
 
 ```js
-const cors = require('cors');
+const cors = require("cors");
 app.use(cors());
 ```
 
@@ -1105,7 +1105,7 @@ We can create a custom error handler to fix that. To avoid potential code duplic
 
      // Send back an error with valid HTTP status code and message
      res.status(statusCode).json({
-       status: 'error',
+       status: "error",
        statusCode,
        message,
      });

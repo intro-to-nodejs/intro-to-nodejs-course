@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 
-We will learn how to:
+By the end of this lesson, you will be able to:
 
 - implement signup and login functionalities for our `Express Recipes` API
 - authenticate application users' requests using [Passport.js](passportjs.org) and [JSON Web Tokens](https://jwt.io/)
@@ -140,7 +140,7 @@ For simplicity, we will implement the JWT authentication mechanism directly in t
    ```js
    module.exports = {
      // JWT_SECRET will be used to create a signature for signing and validating the JWTs
-     JWT_SECRET: '##%%MyS3cr3tK3Y%%##',
+     JWT_SECRET: "##%%MyS3cr3tK3Y%%##",
      JWT_SESSION: {
        // Since we are using JWTs, we don't need sessions, so we set it to false here. Otherwise, Passport.js will attempt to create a session.
        session: false,
@@ -166,11 +166,11 @@ For simplicity, we will implement the JWT authentication mechanism directly in t
 
    ```js
    // import the libraries and classes we need
-   const passport = require('passport');
-   const { Strategy, ExtractJwt } = require('passport-jwt');
+   const passport = require("passport");
+   const { Strategy, ExtractJwt } = require("passport-jwt");
 
-   const { JWT_SECRET, JWT_SESSION } = require('../config/');
-   const { findUser } = require('../models/user');
+   const { JWT_SECRET, JWT_SESSION } = require("../config/");
+   const { findUser } = require("../models/user");
 
    const secret = process.env.JWT_SECRET || JWT_SECRET;
 
@@ -192,7 +192,7 @@ For simplicity, we will implement the JWT authentication mechanism directly in t
          const user = await findUser({ id: jwtPayload.id });
 
          if (!user) {
-           const err = new Error('User not found');
+           const err = new Error("User not found");
            err.status = 404;
            throw err;
          }
@@ -216,7 +216,7 @@ For simplicity, we will implement the JWT authentication mechanism directly in t
 
    // We'll add this middleware to privileged routes later on
    const authenticate = () => {
-     return passport.authenticate('jwt', JWT_SESSION);
+     return passport.authenticate("jwt", JWT_SESSION);
    };
 
    module.exports = {
@@ -236,13 +236,13 @@ Create functions that create and authenticate users with JWT authorization token
 `src/models/user.js`:
 
 ```js
-const bcrypt = require('bcrypt');
-const fs = require('fs').promises;
-const jwt = require('jsonwebtoken');
-const path = require('path');
+const bcrypt = require("bcrypt");
+const fs = require("fs").promises;
+const jwt = require("jsonwebtoken");
+const path = require("path");
 
-const { JWT_SECRET, JWT_EXPIRES_IN } = require('../config/');
-const usersFilePath = path.join(__dirname, './users.json');
+const { JWT_SECRET, JWT_EXPIRES_IN } = require("../config/");
+const usersFilePath = path.join(__dirname, "./users.json");
 
 // Authenticate the user and return an authorization token for the user.
 // We will use this function later on to authenticate a user who's logging in.
@@ -252,7 +252,7 @@ const authenticateUser = async ({ id, email, password }) => {
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!user || !isPasswordValid) {
-    throw new Error('Unable to login');
+    throw new Error("Unable to login");
   }
 
   // Call jwt.sign, which returns an authentication token.
@@ -276,7 +276,7 @@ const createUser = async ({ email, name, password }) => {
   const user = await findUser({ email });
 
   if (user) {
-    throw new Error('Email already exists!');
+    throw new Error("Email already exists!");
   }
 
   const newUser = {
@@ -306,7 +306,7 @@ const findUser = async ({ id, email }) => {
   const users = JSON.parse(data);
 
   const existingUser = users.find(
-    user => user.id === id || user.email === email
+    (user) => user.id === id || user.email === email
   );
 
   return existingUser;
@@ -328,7 +328,7 @@ module.exports = {
    `src/controllers/user.js`:
 
    ```js
-   const { createUser, authenticateUser } = require('../models/user');
+   const { createUser, authenticateUser } = require("../models/user");
 
    const handleSignup = async (req, res, next) => {
      try {
@@ -370,12 +370,12 @@ After the user signs up or logs in, the server returns a token to the client tha
    `src/routers/user.js`:
 
    ```js
-   const express = require('express');
-   const { handleSignup, handleLogin } = require('../controllers/user');
+   const express = require("express");
+   const { handleSignup, handleLogin } = require("../controllers/user");
    const router = express.Router();
 
-   router.post('/signup', handleSignup);
-   router.post('/login', handleLogin);
+   router.post("/signup", handleSignup);
+   router.post("/login", handleLogin);
 
    module.exports = router;
    ```

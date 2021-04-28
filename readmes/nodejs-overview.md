@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 
-We will learn:
+By the end of this lesson, you will be able to:
 
 - Node.js is and how it's different from the browser
 - blocking versus non-blocking patterns in Node.js
@@ -106,8 +106,8 @@ To understand why Node.js is an excellent choice for creating scalable network a
 Blocking methods execute **_synchronously_**. Suppose our application has the following code to read a file:
 
 ```js
-const fs = require('fs'); // load the file system module
-const data = fs.readFileSync('/file.md', 'utf-8'); // while waiting for the file to be read, can't do anything else!
+const fs = require("fs"); // load the file system module
+const data = fs.readFileSync("/file.md", "utf-8"); // while waiting for the file to be read, can't do anything else!
 console.log(data);
 doMoreStuff(); // will run after the console.log on the previous line
 ```
@@ -137,9 +137,9 @@ Non-blocking methods execute **_asynchronously._**
 And here is the **_asynchronous_** version of the file read operation from the previous section:
 
 ```js
-const fs = require('fs'); // load the file system module
+const fs = require("fs"); // load the file system module
 // pass callback function as a third argument
-fs.readFile('/file.md', 'utf-8', (err, data) => {
+fs.readFile("/file.md", "utf-8", (err, data) => {
   if (err) throw err;
   console.log(data);
 });
@@ -229,7 +229,7 @@ When Node.js is installed, you'll have access to the node executable program in 
 1. Core JavaScript features we're familiar with in the browser like `toUpperCase()` are still available in Node.js. Try running the following with REPL:
 
    ```js
-   'hello world'.toUpperCase(); // returns 'HELLO WORLD'
+   "hello world".toUpperCase(); // returns 'HELLO WORLD'
    ```
 
 1. Try entering the name of a JavaScript class, like `Number`, add a dot and press tab. The REPL will print all the properties and methods you can access on that class. Try running some of these methods and properties (e.g., `Number.MAX_VALUE`).
@@ -265,7 +265,7 @@ Let's create a folder where you will save your work for this course! We'll call 
 
    ```js
    // script.js
-   console.log('hello world');
+   console.log("hello world");
    ```
 
 1. Run the script from terminal:
