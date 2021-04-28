@@ -59,6 +59,8 @@ Along the way, we'll learn about `npm` and how to use `npm` to manage Node.js pa
 
 Take a look at the [deployed Express Recipes API](https://evening-badlands-19313.herokuapp.com/).
 
+**You can find the code for the [completed project here](https://github.com/intro-to-nodejs/express-recipes).**
+
 ## The Node Package Manager & Node Community
 
 Before we start building our application, let's take a moment to understand what the [Node Package Manager](https://www.npmjs.com/)(or `npm` for short) is. `npm` consists of three distinct components:

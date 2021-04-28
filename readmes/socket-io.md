@@ -124,6 +124,8 @@ Here's the [deployed game](https://shielded-headland-08484.herokuapp.com/) for y
 
 If you ever feel lost as you progress through the tutorial, you can always reference the commit link provided at the end of each step to compare your code against the completed version!
 
+**You can find the code for the [completed project here](https://github.com/intro-to-nodejs/trivia-game).**
+
 ### Step 1: Installing Express & Socket.IO
 
 1.  From your terminal, change into your course directory: `$ cd /path/to/your/course/directory`
